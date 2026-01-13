@@ -1,0 +1,154 @@
+// quiz.js
+// JavaScript logic for the interactive quiz website
+
+document.addEventListener('DOMContentLoaded', function () {
+    // DOM elements
+    const startScreen = document.getElementById('startScreen');
+    const quizScreen = document.getElementById('quizScreen');
+    const resultsScreen = document.getElementById('resultsScreen');
+    const questionNumber = document.getElementById('questionNumber');
+    const questionText = document.getElementById('questionText');
+    const answersContainer = document.getElementById('answersContainer');
+    const rationale = document.getElementById('rationale');
+    const rationaleText = document.getElementById('rationaleText');
+    const progressFill = document.getElementById('progressFill');
+    const currentQ = document.getElementById('currentQ');
+    const totalQ = document.getElementById('totalQ');
+    const correctCount = document.getElementById('correctCount');
+    const incorrectCount = document.getElementById('incorrectCount');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const scoreCircle = document.getElementById('scoreCircle');
+    const resultTotal = document.getElementById('resultTotal');
+    const resultCorrect = document.getElementById('resultCorrect');
+    const resultIncorrect = document.getElementById('resultIncorrect');
+    const resultScore = document.getElementById('resultScore');
+
+    // Quiz state
+    let currentQuestion = 0;
+    let userAnswers = [];
+    let correct = 0;
+    let incorrect = 0;
+    const totalQuestions = quizData.length;
+    totalQ.textContent = totalQuestions;
+
+    function showScreen(screen) {
+        startScreen.classList.add('hidden');
+        quizScreen.classList.add('hidden');
+        resultsScreen.classList.remove('show');
+        if (screen === 'start') startScreen.classList.remove('hidden');
+        if (screen === 'quiz') quizScreen.classList.remove('hidden');
+        if (screen === 'results') resultsScreen.classList.add('show');
+    }
+
+    window.startQuiz = function () {
+        currentQuestion = 0;
+        userAnswers = Array(totalQuestions).fill(null);
+        correct = 0;
+        incorrect = 0;
+        correctCount.textContent = 0;
+        incorrectCount.textContent = 0;
+        showScreen('quiz');
+        renderQuestion();
+        updateProgress();
+    };
+
+    window.restartQuiz = function () {
+        showScreen('start');
+    };
+
+    function renderQuestion() {
+        const q = quizData[currentQuestion];
+        questionNumber.textContent = `Question ${currentQuestion + 1}`;
+        questionText.textContent = q.question;
+        answersContainer.innerHTML = '';
+        currentQ.textContent = currentQuestion + 1;
+        // Render answers
+        q.answers.forEach((ans, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'answer-btn';
+            btn.textContent = ans.text;
+            btn.disabled = userAnswers[currentQuestion] !== null;
+            if (userAnswers[currentQuestion] !== null) {
+                if (idx === userAnswers[currentQuestion]) {
+                    btn.classList.add(ans.correct ? 'correct' : 'incorrect', 'selected');
+                }
+                if (ans.correct) btn.classList.add('correct');
+            }
+            btn.onclick = () => selectAnswer(idx);
+            answersContainer.appendChild(btn);
+        });
+        // Show rationale if answered
+        if (userAnswers[currentQuestion] !== null) {
+            const selectedIdx = userAnswers[currentQuestion];
+            const selectedRationale = q.answers[selectedIdx].rationale;
+            const correctIdx = q.answers.findIndex(a => a.correct);
+            const correctRationale = q.answers[correctIdx].rationale;
+            let rationaleHtml = '';
+            rationaleHtml += `<strong>Your answer:</strong> ${selectedRationale}`;
+            if (selectedIdx !== correctIdx) {
+                rationaleHtml += `<br><strong>Correct answer:</strong> ${correctRationale}`;
+            }
+            rationaleText.innerHTML = rationaleHtml;
+            rationale.classList.add('show');
+        } else {
+            rationale.classList.remove('show');
+            rationaleText.textContent = '';
+        }
+        // Button states
+        prevBtn.disabled = currentQuestion === 0;
+        nextBtn.textContent = currentQuestion === totalQuestions - 1 ? 'Finish' : 'Next';
+        nextBtn.disabled = userAnswers[currentQuestion] === null;
+    }
+
+    function selectAnswer(idx) {
+        if (userAnswers[currentQuestion] !== null) return;
+        userAnswers[currentQuestion] = idx;
+        const q = quizData[currentQuestion];
+        const ans = q.answers[idx];
+        if (ans.correct) {
+            correct++;
+            correctCount.textContent = correct;
+        } else {
+            incorrect++;
+            incorrectCount.textContent = incorrect;
+        }
+        renderQuestion();
+        updateProgress();
+    }
+
+    window.nextQuestion = function () {
+        if (currentQuestion < totalQuestions - 1) {
+            currentQuestion++;
+            renderQuestion();
+            updateProgress();
+        } else {
+            showResults();
+        }
+    };
+
+    window.prevQuestion = function () {
+        if (currentQuestion > 0) {
+            currentQuestion--;
+            renderQuestion();
+            updateProgress();
+        }
+    };
+
+    function updateProgress() {
+        progressFill.style.width = `${((currentQuestion + 1) / totalQuestions) * 100}%`;
+    }
+
+    function showResults() {
+        showScreen('results');
+        resultTotal.textContent = totalQuestions;
+        resultCorrect.textContent = correct;
+        resultIncorrect.textContent = incorrect;
+        const score = Math.round((correct / totalQuestions) * 100);
+        resultScore.textContent = score + '%';
+        scoreCircle.textContent = score + '%';
+    }
+
+    // If user reloads, show start screen
+    showScreen('start');
+});

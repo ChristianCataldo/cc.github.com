@@ -2,6 +2,14 @@
 // JavaScript logic for the interactive quiz website
 
 document.addEventListener('DOMContentLoaded', function () {
+            // Shuffle answers for each question
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+            quizData.forEach(q => shuffleArray(q.answers));
         const questionDropdown = document.getElementById('questionDropdown');
     // DOM elements
     const startScreen = document.getElementById('startScreen');
@@ -35,15 +43,14 @@ document.addEventListener('DOMContentLoaded', function () {
     totalQ.textContent = totalQuestions;
 
     function showScreen(screen) {
-        startScreen.classList.add('hidden');
         quizScreen.classList.add('hidden');
         resultsScreen.classList.remove('show');
-        if (screen === 'start') startScreen.classList.remove('hidden');
         if (screen === 'quiz') quizScreen.classList.remove('hidden');
         if (screen === 'results') resultsScreen.classList.add('show');
     }
 
-    window.startQuiz = function () {
+    // Start directly in quiz mode
+    function startQuizDirect() {
         currentQuestion = 0;
         userAnswers = Array(totalQuestions).fill(null);
         correct = 0;
@@ -53,11 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
         showScreen('quiz');
         renderQuestion();
         updateProgress();
-    };
-
-    window.restartQuiz = function () {
-        showScreen('start');
-    };
+    }
 
     function renderQuestion() {
                     // Update answered count
@@ -127,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Button states
         prevBtn.disabled = currentQuestion === 0;
         nextBtn.textContent = currentQuestion === totalQuestions - 1 ? 'Finish' : 'Next';
-        nextBtn.disabled = userAnswers[currentQuestion] === null;
+        nextBtn.disabled = false;
     }
 
     function selectAnswer(idx) {
@@ -189,6 +192,6 @@ document.addEventListener('DOMContentLoaded', function () {
         scoreCircle.textContent = score + '%';
     }
 
-    // If user reloads, show start screen
-    showScreen('start');
+    // If user reloads, start directly in quiz mode
+    startQuizDirect();
 });

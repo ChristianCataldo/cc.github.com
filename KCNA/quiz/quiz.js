@@ -2,6 +2,7 @@
 // JavaScript logic for the interactive quiz website
 
 document.addEventListener('DOMContentLoaded', function () {
+        const questionDropdown = document.getElementById('questionDropdown');
     // DOM elements
     const startScreen = document.getElementById('startScreen');
     const quizScreen = document.getElementById('quizScreen');
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const resultCorrect = document.getElementById('resultCorrect');
     const resultIncorrect = document.getElementById('resultIncorrect');
     const resultScore = document.getElementById('resultScore');
+    const answeredCount = document.getElementById('answeredCount');
 
     // Quiz state
     let currentQuestion = 0;
@@ -58,6 +60,31 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     function renderQuestion() {
+                    // Update answered count
+                    if (answeredCount) {
+                        const numAnswered = userAnswers.filter(a => a !== null).length;
+                        answeredCount.textContent = numAnswered;
+                    }
+            renderQuestionDropdown();
+            function renderQuestionDropdown() {
+                if (!questionDropdown) return;
+                questionDropdown.innerHTML = '';
+                for (let i = 0; i < totalQuestions; i++) {
+                    const opt = document.createElement('option');
+                    opt.value = i;
+                    opt.textContent = `Question ${i + 1}`;
+                    if (i === currentQuestion) opt.selected = true;
+                    questionDropdown.appendChild(opt);
+                }
+            }
+
+            if (questionDropdown) {
+                questionDropdown.addEventListener('change', function () {
+                    currentQuestion = parseInt(this.value, 10);
+                    renderQuestion();
+                    updateProgress();
+                });
+            }
         const q = quizData[currentQuestion];
         questionNumber.textContent = `Question ${currentQuestion + 1}`;
         questionText.textContent = q.question;
@@ -68,12 +95,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const btn = document.createElement('button');
             btn.className = 'answer-btn';
             btn.textContent = ans.text;
-            btn.disabled = userAnswers[currentQuestion] !== null;
+            btn.disabled = false;
             if (userAnswers[currentQuestion] !== null) {
                 if (idx === userAnswers[currentQuestion]) {
                     btn.classList.add(ans.correct ? 'correct' : 'incorrect', 'selected');
                 }
-                if (ans.correct) btn.classList.add('correct');
+                if (ans.correct) {
+                    btn.classList.add('correct');
+                }
             }
             btn.onclick = () => selectAnswer(idx);
             answersContainer.appendChild(btn);
@@ -102,9 +131,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function selectAnswer(idx) {
-        if (userAnswers[currentQuestion] !== null) return;
-        userAnswers[currentQuestion] = idx;
+        // Allow changing answer before moving to next question
+        const prevIdx = userAnswers[currentQuestion];
         const q = quizData[currentQuestion];
+        if (prevIdx !== null && prevIdx !== undefined) {
+            // Remove previous count
+            if (q.answers[prevIdx].correct) {
+                correct--;
+                correctCount.textContent = correct;
+            } else {
+                incorrect--;
+                incorrectCount.textContent = incorrect;
+            }
+        }
+        userAnswers[currentQuestion] = idx;
         const ans = q.answers[idx];
         if (ans.correct) {
             correct++;

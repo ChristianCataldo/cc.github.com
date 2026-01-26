@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: #000;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,10 +22,11 @@
         }
 
         .container {
-            background: white;
+            background: #0f1419;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 800px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+                background: #000;
+                max-width: 800px;
             width: 100%;
             padding: 40px;
         }
@@ -36,7 +37,7 @@
         }
 
         .header h1 {
-            color: #667eea;
+            color: #fff;
             font-size: 2.5em;
             margin-bottom: 10px;
         }
@@ -44,7 +45,7 @@
         .progress-bar {
             width: 100%;
             height: 8px;
-            background: #e0e0e0;
+            background: #1f2937;
             border-radius: 4px;
             overflow: hidden;
             margin-bottom: 30px;
@@ -62,7 +63,7 @@
             justify-content: space-around;
             margin-bottom: 30px;
             padding: 20px;
-            background: #f8f9fa;
+                background: #000;
             border-radius: 10px;
         }
 
@@ -71,7 +72,7 @@
         }
 
         .stat-label {
-            color: #666;
+            color: #9ca3af;
             font-size: 0.9em;
             margin-bottom: 5px;
         }
@@ -79,7 +80,7 @@
         .stat-value {
             font-size: 1.8em;
             font-weight: bold;
-            color: #667eea;
+            color: #fff;
         }
 
         .question-card {
@@ -87,14 +88,14 @@
         }
 
         .question-number {
-            color: #667eea;
+            color: #fff;
             font-weight: bold;
             margin-bottom: 10px;
         }
 
         .question-text {
             font-size: 1.2em;
-            color: #333;
+            color: #e5e7eb;
             margin-bottom: 20px;
             line-height: 1.6;
         }
@@ -106,35 +107,38 @@
         }
 
         .answer-btn {
-            background: white;
-            border: 2px solid #e0e0e0;
+            background: #1a1f2e;
+            border: 2px solid #374151;
             padding: 15px 20px;
             border-radius: 10px;
             text-align: left;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 1em;
+            color: #e5e7eb;
         }
 
         .answer-btn:hover {
-            border-color: #667eea;
-            background: #f8f9fa;
+            border-color: #7c3aed;
+            background: #252b3b;
             transform: translateX(5px);
         }
 
         .answer-btn.selected {
-            border-color: #667eea;
-            background: #e8ebff;
+            border-color: #7c3aed;
+            background: #2d1b4e;
         }
 
         .answer-btn.correct {
-            border-color: #10b981;
-            background: #d1fae5;
+              border-color: #10b981;
+              background: #047857;
+              color: #e5e7eb;
         }
 
-        .answer-btn.incorrect {
-            border-color: #ef4444;
-            background: #fee2e2;
+           .answer-btn.incorrect {
+              border-color: #ef4444;
+              background: #7f1d1d;
+              color: #e5e7eb;
         }
 
         .answer-btn:disabled {
@@ -144,8 +148,8 @@
         .rationale {
             margin-top: 15px;
             padding: 15px;
-            background: #f8f9fa;
-            border-left: 4px solid #667eea;
+                background: #000;
+                border-left: 4px solid #fff;
             border-radius: 5px;
             display: none;
         }
@@ -167,7 +171,7 @@
         }
 
         .rationale-text {
-            color: #555;
+            color: #d1d5db;
             line-height: 1.6;
         }
 
@@ -189,22 +193,22 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #fff 0%, #bbb 100%);
+            color: #222;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.2);
         }
 
         .btn-secondary {
-            background: #e0e0e0;
-            color: #333;
+            background: #374151;
+            color: #e5e7eb;
         }
 
         .btn-secondary:hover {
-            background: #d0d0d0;
+            background: #4b5563;
         }
 
         .btn:disabled {
@@ -223,7 +227,7 @@
         }
 
         .results h2 {
-            color: #667eea;
+            color: #fff;
             font-size: 2em;
             margin-bottom: 20px;
         }
@@ -232,18 +236,18 @@
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #fff 0%, #bbb 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 30px auto;
-            color: white;
+            color: #222;
             font-size: 3em;
             font-weight: bold;
         }
 
         .results-details {
-            background: #f8f9fa;
+            background: #000;
             padding: 20px;
             border-radius: 10px;
             margin: 20px 0;
@@ -253,7 +257,8 @@
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid #374151;
+            color: #e5e7eb;
         }
 
         .results-row:last-child {
@@ -265,13 +270,13 @@
         }
 
         #startScreen h2 {
-            color: #667eea;
+            color: #7c3aed;
             font-size: 2em;
             margin-bottom: 20px;
         }
 
         #startScreen p {
-            color: #666;
+            color: #9ca3af;
             font-size: 1.1em;
             margin-bottom: 30px;
             line-height: 1.6;
@@ -299,7 +304,60 @@
                 <div class="progress-fill" id="progressFill"></div>
             </div>
 
+            <div class="question-dropdown-container">
+                <label for="questionDropdown" style="color:#e5e7eb;margin-right:8px;">Jump to:</label>
+                <select id="questionDropdown" class="question-dropdown"></select>
+            </div>
+                    <style>
+                    .question-dropdown-container {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin-bottom: 18px;
+                    }
+                    .question-dropdown {
+                        background: #252b3b;
+                        color: #e5e7eb;
+                        border: 1px solid #374151;
+                        border-radius: 6px;
+                        padding: 6px 12px;
+                        font-size: 1em;
+                    }
+                    .question-dropdown:focus {
+                        outline: 2px solid #fff;
+                    }
+                    </style>
             <div class="stats">
+                        <style>
+                        .question-selector {
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 6px;
+                            justify-content: center;
+                            margin-bottom: 18px;
+                        }
+                        .question-selector-btn {
+                            width: 32px;
+                            height: 32px;
+                            border-radius: 50%;
+                            border: none;
+                            background: #252b3b;
+                            color: #e5e7eb;
+                            font-weight: bold;
+                            cursor: pointer;
+                            transition: background 0.2s;
+                        }
+                        .question-selector-btn.selected {
+                            background: #7c3aed;
+                            color: #fff;
+                        }
+                        .question-selector-btn.answered {
+                            border: 2px solid #10b981;
+                        }
+                        .question-selector-btn:not(.selected):hover {
+                            background: #374151;
+                        }
+                        </style>
                 <div class="stat">
                     <div class="stat-label">Question</div>
                     <div class="stat-value"><span id="currentQ">1</span>/<span id="totalQ">120</span></div>
@@ -311,6 +369,10 @@
                 <div class="stat">
                     <div class="stat-label">Incorrect</div>
                     <div class="stat-value" id="incorrectCount">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Answered</div>
+                    <div class="stat-value" id="answeredCount">0</div>
                 </div>
             </div>
 
